@@ -101,16 +101,11 @@ function createScene()
 		  color: 0xFF0000
 		});
 	//  crea el material del plano
-	var planeMaterial =
-	  new THREE.MeshLambertMaterial(
-		{
-		  color: 0xFFFFFF
-		});
-	// crear el material de la mesa
+    var texturaFondo =  THREE.ImageUtils.loadTexture("textures/cancha.png");
 	var tableMaterial =
 	  new THREE.MeshLambertMaterial(
 		{
-		  color: 0x111111
+		   map: texturaFondo
 		});
 	// crear el material del suelo
 	var groundMaterial =
@@ -121,18 +116,6 @@ function createScene()
 		
 		
 	// crea el plano de superficie de juego
-	var plane = new THREE.Mesh(
-
-	  new THREE.PlaneGeometry(
-		planeWidth * 0.95,	//  95% del ancho de la mesa, ya que queremos mostrar dónde sale la pelota fuera de límites
-		planeHeight,
-		planeQuality,
-		planeQuality),
-
-	  planeMaterial);
-	  
-	scene.add(plane);
-	plane.receiveShadow = true;	
 	
 	var table = new THREE.Mesh(
 
@@ -223,14 +206,13 @@ function createScene()
     paddle2.castShadow = true;	
 	
 	// establecer paletas en cada lado de la mesa
-	paddle1.position.x = -fieldWidth/2 + paddleWidth;
+	paddle1.position.x = -165;
 	paddle2.position.x = fieldWidth/2 - paddleWidth;
 	
 	// poner las paletas sobre la superficie de la mesa
 	paddle1.position.z = paddleDepth;
 	paddle2.position.z = paddleDepth;
 		
-	
 	
 	// finalmente terminamos agregando un plano de tierra
 	// para mostrar sombras 
@@ -371,8 +353,8 @@ function opponentPaddleMovement()
 	// el estiramiento se realiza cuando la paleta toca el lado de la mesa y cuando la paleta golpea la bola
 	// Al hacer esto aquí, nos aseguramos de que Paddle siempre vuelva a su tamaño predeterminado.
 	paddle2.scale.y += (1 - paddle2.scale.y) * 0.2;	
+    paddle2.position.x=165;
 }
-
 
 // Maneja el movimiento de la paleta del jugador.
 function playerPaddleMovement()
@@ -410,7 +392,7 @@ function playerPaddleMovement()
 	// mover arriba
 	else if (Key.isDown(Key.W))
 	{
-		if (paddle1.position.x > -fieldWidth*2 * 0.45)
+		if (paddle1.position.x < 0)
 		{
 			paddle1DirX = paddleSpeed * 0.5;
 		}
@@ -423,7 +405,7 @@ function playerPaddleMovement()
     // mover abajo
 	else if (Key.isDown(Key.S))
 	{
-		if (paddle1.position.x > -fieldWidth*2 * 0.45)
+		if (paddle1.position.x > -165)
 		{
 			paddle1DirX = -paddleSpeed * 0.5;
 		}
