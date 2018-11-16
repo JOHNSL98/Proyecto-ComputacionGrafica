@@ -15,7 +15,7 @@ var paddleWidth, paddleHeight, paddleDepth, paddleQuality;
 var paddle1DirY = 0, paddle2DirY = 0, paddleSpeed = 3, paddle1DirX = 0, paddle2DirX = 0;
 
 // variables del disco
-var ball, paddle1, paddle2;
+var ball, paddle1, paddle2, cancha1, cancha2;
 var ballDirX = 1, ballDirY = 1, ballSpeed = 2;
 
 // Variables marcadores => 0 - debideamente por marcadores iniciales
@@ -112,6 +112,12 @@ function createScene()
 	  new THREE.MeshLambertMaterial(
 		{
 		  color: 0x888888
+		});
+    // crear el material de las canchas
+    var canchaMaterial =
+	  new THREE.MeshLambertMaterial(
+		{
+		  color: 0x101010
 		});
 		
 		
@@ -213,7 +219,39 @@ function createScene()
 	paddle1.position.z = paddleDepth;
 	paddle2.position.z = paddleDepth;
 		
+    cancha1 = new THREE.Mesh(
+
+	  new THREE.CubeGeometry(
+		10,
+		35,
+		paddleDepth),
+
+	  canchaMaterial);
+    
+    cancha2 = new THREE.Mesh(
+
+	  new THREE.CubeGeometry(
+		10,
+		35,
+		paddleDepth),
+
+	  canchaMaterial);
+	  
+	// añadir la cancha 1 a la escena
+	scene.add(cancha1);
+    scene.add(cancha2);
+    
+    // establecer canchas en cada lado de la mesa
+	cancha1.position.x = -173;
+    cancha1.position.y = -1;
+	cancha2.position.x = 173;
+    cancha2.position.y = -1;
 	
+	// poner las canchas sobre la superficie de la mesa
+	cancha1.position.z = paddleDepth;
+	cancha2.position.z = paddleDepth;
+	
+    
 	// finalmente terminamos agregando un plano de tierra
 	// para mostrar sombras 
 	var ground = new THREE.Mesh(
@@ -273,7 +311,7 @@ function draw()
 function ballPhysics()
 {
 	// si la bola sale del lado 'izquierdo' (lado del jugador)
-	if (ball.position.x <= -fieldWidth/2)
+	if (ball.position.x <= -166 && ball.position.y <= 0)
 	{	
 		// puntajes de CPU
 		score2++;
@@ -373,7 +411,6 @@ function playerPaddleMovement()
 		else
 		{
 			paddle1DirY = 0;
-			paddle1.scale.z += (10 - paddle1.scale.z) * 0.2;
 		}
 	}	
 	// mover a la derecha
@@ -386,7 +423,6 @@ function playerPaddleMovement()
 		else
 		{
 			paddle1DirY = 0;
-			paddle1.scale.z += (10 - paddle1.scale.z) * 0.2;
 		}
 	}	
 	// mover arriba
@@ -399,7 +435,6 @@ function playerPaddleMovement()
 		else
 		{
 			paddle1DirX = 0;
-			paddle1.scale.z += (10 - paddle1.scale.z) * 0.2;
 		}
 	}
     // mover abajo
@@ -412,7 +447,6 @@ function playerPaddleMovement()
 		else
 		{
 			paddle1DirX = 0;
-			paddle1.scale.z += (10 - paddle1.scale.z) * 0.2;
 		}
 	}
 	// de lo contrario no muevas la paleta
