@@ -311,7 +311,7 @@ function draw()
 function ballPhysics()
 {
 	// si la bola sale del lado 'izquierdo' (lado del jugador)
-	if (ball.position.x <= -166 && ball.position.y <= 0)
+	if (ball.position.x <= -173 && ball.position.y == 0)
 	{	
 		// puntajes de CPU
 		score2++;
@@ -321,9 +321,21 @@ function ballPhysics()
 		resetBall(2);
 		matchScoreCheck();	
 	}
+    
+    // si la bola toca el lado izquierdo
+    if (ball.position.x <= -173 && (ball.position.y > 0 || ball.position.y < 0))
+	{	
+		ballDirX = -ballDirX;	
+	}
+    
+    // si la bola toca el lado derecho
+    if (ball.position.x >= 173 && (ball.position.y > 0 || ball.position.y < 0))
+	{	
+		ballDirX = -ballDirX;	
+	}
 	
 	// si la bola sale del lado 'derecho' (lado de la CPU)
-	if (ball.position.x >= fieldWidth/2)
+	if (ball.position.x >= 173 && ball.position.y == 0)
 	{	
 		// puntajes de los jugadores
 		score1++;
