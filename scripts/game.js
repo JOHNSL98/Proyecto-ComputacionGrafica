@@ -35,9 +35,7 @@ function setup()
 	// actualizar el tablero para reflejar la puntuación máxima para ganar partidos
 	document.getElementById("winnerBoard").innerHTML = "First to " + maxScore + " wins!";
 	
-	// Reiniciar marcadores
-	score1 = 0;
-	score2 = 0;
+	
 	
 	// Configurar los objetos de la escena - juego
 	createScene();
@@ -313,13 +311,11 @@ function ballPhysics()
 	// si la bola sale del lado 'izquierdo' (lado del jugador)
 	if (ball.position.x <= -173 && ball.position.y <= 6 && ball.position.y >= -6)
 	{	
-		// puntajes de CPU
-		score2++;
+		// puntaj
 		// actualizar el marcador HTML
 		document.getElementById("scores").innerHTML = score1 + "-" + score2;
 		// restablecer la bola al centro
 		resetBall(2);
-		matchScoreCheck();	
 	}
     
     // si la bola toca el lado izquierdo
@@ -337,13 +333,11 @@ function ballPhysics()
 	// si la bola sale del lado 'derecho' (lado de la CPU)
 	if (ball.position.x >= 173 && ball.position.y <= 6 && ball.position.y >= -6)
 	{	
-		// puntajes de los jugadores
-		score1++;
+		// 
 		// actualizar el marcador HTML
 		document.getElementById("scores").innerHTML = score1 + "-" + score2;
 		// restablecer la bola al centro
 		resetBall(1);
-		matchScoreCheck();	
 	}
 	
 	// si la bola sale del lado superior (lado de la mesa)
@@ -491,7 +485,7 @@ function paddlePhysics()
 	
 	// si la bola está alineada con paddle1 en el plano x
 	// recuerda que la posición es el CENTRO del objeto
-	// solo verificamos entre el frente y el medio de la paleta (colisión en un solo sentido)
+	// solo se verifica entre el frente y el medio de la paleta
 	if (ball.position.x <= paddle1.position.x + paddleWidth
 	&&  ball.position.x >= paddle1.position.x)
 	{
@@ -499,7 +493,7 @@ function paddlePhysics()
 		if (ball.position.y <= paddle1.position.y + paddleHeight/2
 		&&  ball.position.y >= paddle1.position.y - paddleHeight/2)
 		{
-			// y si la bola viaja hacia el jugador (dirección -ve)
+			// y si la bola viaja hacia el jugadorda
 			if (ballDirX < 0)
 			{
 				// cambiar la dirección del recorrido de la bola para crear rebote
@@ -552,35 +546,3 @@ function resetBall(loser)
 
 var bounceTime = 0;
 // comprueba si el jugador o el oponente ha alcanzado 7 puntos
-function matchScoreCheck()
-{
-	// si el jugador tiene 7 puntos
-	if (score1 >= maxScore)
-	{
-		// parar el disco
-		ballSpeed = 0;
-		// escribir en el banner
-		document.getElementById("scores").innerHTML = "Jugador Gana!";		
-		document.getElementById("winnerBoard").innerHTML = "Actualice la pagina para jugar de nuevo";
-		// hacer que la paleta rebote arriba y abajo
-		bounceTime++;
-		paddle1.position.z = Math.sin(bounceTime * 0.1) * 10;
-		// Agrandar y aplastar la paleta para emular alegría.
-		paddle1.scale.z = 2 + Math.abs(Math.sin(bounceTime * 0.1)) * 10;
-		paddle1.scale.y = 2 + Math.abs(Math.sin(bounceTime * 0.05)) * 10;
-	}
-	// de lo contrario si el oponente tiene 7 puntos
-	else if (score2 >= maxScore)
-	{
-		ballSpeed = 0;
-        
-		document.getElementById("scores").innerHTML = "CPU Gana!";
-		document.getElementById("winnerBoard").innerHTML = "Actualice la pagina para jugar de nuevo";
-        
-		bounceTime++;
-		paddle2.position.z = Math.sin(bounceTime * 0.1) * 10;
-        
-		paddle2.scale.z = 2 + Math.abs(Math.sin(bounceTime * 0.1)) * 10;
-		paddle2.scale.y = 2 + Math.abs(Math.sin(bounceTime * 0.05)) * 10;
-	}
-}
