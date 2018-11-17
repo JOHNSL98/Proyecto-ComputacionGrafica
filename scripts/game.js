@@ -173,7 +173,7 @@ function createScene()
 	
 	// configurar las variables de paletas
 	paddleWidth = 10;
-	paddleHeight = 30;
+	paddleHeight = 20;
 	paddleDepth = 10;
 	paddleQuality = 1;
 		
@@ -311,7 +311,7 @@ function draw()
 function ballPhysics()
 {
 	// si la bola sale del lado 'izquierdo' (lado del jugador)
-	if (ball.position.x <= -173 && ball.position.y == 0)
+	if (ball.position.x <= -173 && ball.position.y <= 6 && ball.position.y >= -6)
 	{	
 		// puntajes de CPU
 		score2++;
@@ -335,7 +335,7 @@ function ballPhysics()
 	}
 	
 	// si la bola sale del lado 'derecho' (lado de la CPU)
-	if (ball.position.x >= 173 && ball.position.y == 0)
+	if (ball.position.x >= 173 && ball.position.y <= 6 && ball.position.y >= -6)
 	{	
 		// puntajes de los jugadores
 		score1++;
